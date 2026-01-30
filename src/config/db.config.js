@@ -29,6 +29,8 @@ const initDb = async () => {
             const hashedPassword = await Bun.password.hash("admin123");
             db.run("INSERT INTO users (email, password, role) VALUES (?, ?, ?)", [adminEmail, hashedPassword, "ADMIN"]);
             console.log("Admin user seeded: admin@example.com / admin123");
+        } else {
+            console.log("Admin user already exists");
         }
     } catch (error) {
         console.error("Failed to initialize database:", error);

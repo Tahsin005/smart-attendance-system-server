@@ -1,4 +1,5 @@
 import jwt from "jsonwebtoken";
+import config from "../config/env.config.js";
 import { db } from "../config/db.config.js";
 
 export const login = async (req, res) => {
@@ -17,7 +18,7 @@ export const login = async (req, res) => {
 
         const token = jwt.sign(
             { userId: user.id, role: user.role },
-            process.env.JWT_SECRET,
+            config.jwtSecret,
             { expiresIn: "1d" }
         );
 
