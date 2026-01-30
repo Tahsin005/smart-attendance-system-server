@@ -1,0 +1,21 @@
+{
+  "name": "smart-attendance-system-server",
+  "module": "index.js",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "bun run --watch index.js",
+    "start": "bun run index.js"
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "cors": "^2.8.6",
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1"
+  }
+}
