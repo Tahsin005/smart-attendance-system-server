@@ -1,8 +1,8 @@
 import express from "express";
-import { getHealth } from "../controllers/health.controller.js";
+import { HealthHandler } from "../handlers/health.handler.js";
 
 const router = express.Router();
 
-router.get("/", getHealth);
+router.get("/", HealthHandler.check);
 
 export default router;
