@@ -20,6 +20,26 @@ const initDb = async () => {
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )
         `);
+
+        db.run(`
+            CREATE TABLE IF NOT EXISTS work_sessions (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                user_id INTEGER NOT NULL,
+                work_date DATE NOT NULL,
+                status TEXT CHECK (status IN ('NOT_STARTED', 'WORKING', 'COMPLETED')) DEFAULT 'NOT_STARTED',
+                start_time DATETIME,
+                start_lat REAL,
+                start_lng REAL,
+                start_selfie_url TEXT,
+                end_time DATETIME,
+                end_lat REAL,
+                end_lng REAL,
+                end_selfie_url TEXT,
+                created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+                UNIQUE(user_id, work_date),
+                FOREIGN KEY (user_id) REFERENCES users(id)
+            )
+        `);
         console.log("Database initialized successfully");
 
         const adminEmail = "admin@example.com";
