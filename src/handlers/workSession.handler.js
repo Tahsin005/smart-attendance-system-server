@@ -84,4 +84,15 @@ export const WorkSessionHandler = {
             return ApiResponse.error(res, error.message, error, statusCode);
         }
     },
+
+    getDetails: async (req, res) => {
+        try {
+            const { id } = req.params;
+            const details = WorkSessionService.getDetails(id);
+            return ApiResponse.success(res, "Work session details retrieved successfully", details);
+        } catch (error) {
+            const statusCode = error.message.includes("not found") ? 404 : 500;
+            return ApiResponse.error(res, error.message, error, statusCode);
+        }
+    }
 };

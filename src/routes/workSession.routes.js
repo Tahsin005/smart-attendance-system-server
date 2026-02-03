@@ -6,6 +6,7 @@ import { uploadSingleImage } from "../middleware/upload.middleware.js";
 const router = express.Router();
 
 router.get("/today", authMiddleware, WorkSessionHandler.getTodaySession);
+router.get("/:id/details", authMiddleware, WorkSessionHandler.getDetails);
 
 router.post("/start", authMiddleware, uploadSingleImage, WorkSessionHandler.startWork);
 

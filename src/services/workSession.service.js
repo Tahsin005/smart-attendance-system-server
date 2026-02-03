@@ -62,4 +62,12 @@ export const WorkSessionService = {
 
         return updatedSession;
     },
+
+    getDetails: (sessionId) => {
+        const details = WorkSessionRepository.getDetailsWithLocations(sessionId);
+        if (!details) {
+            throw new Error("Work session not found.");
+        }
+        return details;
+    }
 };

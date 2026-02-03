@@ -42,4 +42,36 @@ export const WorkSessionRepository = {
         );
         return db.query("SELECT * FROM work_sessions WHERE id = ?").get(id);
     },
+
+    findSessionsByUserId: (userId, startDate, endDate) => {
+        let query = "SELECT * FROM work_sessions WHERE user_id = ?";
+        const params = [userId];
+
+        if (startDate) {
+            query += " AND work_date >= ?";
+            params.push(startDate);
+        }
+
+        if (endDate) {
+            query += " AND work_date <= ?";
+            params.push(endDate);
+        }
+
+        query += " ORDER BY work_date DESC";
+        return db.query(query).all(...params);
+    },
+
+    getDetailsWithLocations: (sessionId) => {
+        const session = db.query("SELECT * FROM work_sessions WHERE id = ?").get(sessionId);
+        if (!session) return null;
+
+        const liveLocation = db.query("SELECT * FROM location_live WHERE work_session_id = ?").get(sessionId);
+        const locationLogs = db.query("SELECT * FROM location_logs WHERE work_session_id = ? ORDER BY recorded_at ASC").all(sessionId);
+
+        return {
+            ...session,
+            liveLocation,
+            locationLogs
+        };
+    }
 };
