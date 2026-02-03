@@ -40,15 +40,44 @@ const initDb = async () => {
                 FOREIGN KEY (user_id) REFERENCES users(id)
             )
         `);
+
+        db.run(`
+            CREATE TABLE IF NOT EXISTS location_live (
+                work_session_id INTEGER PRIMARY KEY,
+
+                lat REAL NOT NULL,
+                lng REAL NOT NULL,
+                recorded_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+
+                FOREIGN KEY (work_session_id)
+                    REFERENCES work_sessions(id)
+                    ON DELETE CASCADE
+            )
+        `);
+
+        db.run(`
+            CREATE TABLE IF NOT EXISTS location_logs (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+
+                work_session_id INTEGER NOT NULL,
+                lat REAL NOT NULL,
+                lng REAL NOT NULL,
+                recorded_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+
+                FOREIGN KEY (work_session_id)
+                    REFERENCES work_sessions(id)
+                    ON DELETE CASCADE
+            )
+        `);
         console.log("Database initialized successfully");
 
-        const adminEmail = "admin@example.com";
+        const adminEmail = "[EMAIL_ADDRESS]";
         const adminExists = db.query("SELECT * FROM users WHERE email = ?").get(adminEmail);
 
         if (!adminExists) {
             const hashedPassword = await Bun.password.hash("admin123");
             db.run("INSERT INTO users (email, password, role) VALUES (?, ?, ?)", [adminEmail, hashedPassword, "ADMIN"]);
-            console.log("Admin user seeded: admin@example.com / admin123");
+            console.log("Admin user seeded: [EMAIL_ADDRESS] / admin123");
         } else {
             console.log("Admin user already exists");
         }

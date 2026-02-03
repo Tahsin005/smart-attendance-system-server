@@ -13,7 +13,7 @@ export const AuthService = {
         const token = jwt.sign(
             { userId: user.id, role: user.role },
             config.jwtSecret,
-            { expiresIn: "1d" }
+            { expiresIn: "30d" }
         );
 
         return {
