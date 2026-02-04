@@ -71,13 +71,13 @@ const initDb = async () => {
         `);
         console.log("Database initialized successfully");
 
-        const adminEmail = "[EMAIL_ADDRESS]";
+        const adminEmail = "admin@gmail.com";
         const adminExists = db.query("SELECT * FROM users WHERE email = ?").get(adminEmail);
 
         if (!adminExists) {
             const hashedPassword = await Bun.password.hash("admin123");
             db.run("INSERT INTO users (email, password, role) VALUES (?, ?, ?)", [adminEmail, hashedPassword, "ADMIN"]);
-            console.log("Admin user seeded: [EMAIL_ADDRESS] / admin123");
+            console.log("Admin user seeded: admin@gmail.com / admin123");
         } else {
             console.log("Admin user already exists");
         }

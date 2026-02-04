@@ -35,7 +35,7 @@ export const LocationService = {
             );
 
             // if distance >= threshold (e.g. 2m)
-            if (distance >= 2) {
+            if (distance >= 0) {
                 shouldLog = true;
             }
         }
