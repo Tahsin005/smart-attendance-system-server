@@ -1,5 +1,6 @@
 import { WorkSessionRepository } from "../repositories/workSession.repository.js";
 import { uploadToCloudinary } from "../config/cloudinary.config.js";
+import { LocationRepository } from "../repositories/location.repository.js";
 
 const getTodayDate = () => {
     return new Date().toISOString().split("T")[0];
@@ -34,6 +35,9 @@ export const WorkSessionService = {
             startLng: lng,
             startSelfieUrl: selfieUrl,
         });
+
+        // upsert live location with starting coordinates
+        LocationRepository.upsertLiveLocation(updatedSession.id, lat, lng);
 
         return updatedSession;
     },
