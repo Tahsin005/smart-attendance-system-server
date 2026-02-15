@@ -4,6 +4,7 @@ import authRoutes from "./auth.routes.js";
 import workSessionRoutes from "./workSession.routes.js";
 import locationRoutes from "./location.routes.js";
 import adminRoutes from "./admin.routes.js";
+import notificationRoutes from "./notification.routes.js";
 
 const router = express.Router();
 
@@ -12,5 +13,6 @@ router.use("/auth", authRoutes);
 router.use("/work-session", workSessionRoutes);
 router.use("/location", locationRoutes);
 router.use("/admin", adminRoutes);
+router.use("/notifications", notificationRoutes);
 
 export default router;

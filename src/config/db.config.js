@@ -69,6 +69,15 @@ const initDb = async () => {
                     ON DELETE CASCADE
             )
         `);
+        db.run(`
+            CREATE TABLE IF NOT EXISTS push_tokens (
+                user_id INTEGER NOT NULL,
+                expo_push_token TEXT NOT NULL,
+                created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+                PRIMARY KEY (user_id, expo_push_token),
+                FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+            )
+        `);
         console.log("Database initialized successfully");
 
         const adminEmail = "admin@gmail.com";
